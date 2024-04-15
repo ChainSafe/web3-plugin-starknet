@@ -1,7 +1,10 @@
 import { core } from "web3";
 import { StarknetRPCMethods } from "./enums";
+import { StarknetRpcApi } from "./types";
 
-export function call(requestManager: core.Web3RequestManager<{}>): Object {
+export function call(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
+): Object {
   return requestManager.send({
     method: StarknetRPCMethods.call,
     params: [],
@@ -9,7 +12,7 @@ export function call(requestManager: core.Web3RequestManager<{}>): Object {
 }
 
 export function estimateFee(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.estimateFee,
@@ -18,7 +21,7 @@ export function estimateFee(
 }
 
 export function estimateMessageFee(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.estimateMessageFee,
@@ -27,7 +30,7 @@ export function estimateMessageFee(
 }
 
 export function simulateTransactions(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.simulateTransactions,
@@ -36,7 +39,7 @@ export function simulateTransactions(
 }
 
 export function traceBlockTransactions(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.traceBlockTransactions,
@@ -45,7 +48,7 @@ export function traceBlockTransactions(
 }
 
 export function getClassAt(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getClassAt,
@@ -54,7 +57,7 @@ export function getClassAt(
 }
 
 export function getClassHashAt(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getClassHashAt,
@@ -62,7 +65,9 @@ export function getClassHashAt(
   });
 }
 
-export function getNonce(requestManager: core.Web3RequestManager<{}>): Object {
+export function getNonce(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
+): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getNonce,
     params: [],
@@ -70,7 +75,7 @@ export function getNonce(requestManager: core.Web3RequestManager<{}>): Object {
 }
 
 export function getTransactionByHash(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByHash,
@@ -79,7 +84,7 @@ export function getTransactionByHash(
 }
 
 export function getTransactionByBlockIdAndIndex(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByBlockIdAndIndex,
@@ -88,7 +93,7 @@ export function getTransactionByBlockIdAndIndex(
 }
 
 export function getStorageAt(
-  requestManager: core.Web3RequestManager<{}>
+  requestManager: core.Web3RequestManager<StarknetRpcApi>
 ): Object {
   return requestManager.send({
     method: StarknetRPCMethods.getStorageAt,
