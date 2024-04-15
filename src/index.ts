@@ -1,7 +1,7 @@
 import { Web3PluginBase } from "web3";
 
-export class TemplatePlugin extends Web3PluginBase {
-  public pluginNamespace = "template";
+export class StarknetPlugin extends Web3PluginBase {
+  public pluginNamespace = "starknet";
 
   public test(param: string): void {
     console.log(param);
@@ -11,6 +11,6 @@ export class TemplatePlugin extends Web3PluginBase {
 // Module Augmentation
 declare module "web3" {
   interface Web3Context {
-    template: TemplatePlugin;
+    template: StarknetPlugin;
   }
 }
