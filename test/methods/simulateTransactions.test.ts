@@ -4,9 +4,9 @@ import { StarknetRpcApi } from "../../src/types";
 
 describe("Method simulateTransactions Tests", () => {
   const requestManagerSend = jest.fn();
-  const requestManager: core.Web3RequestManager<StarknetRpcApi> = {
+  const requestManager = {
     send: requestManagerSend,
-  };
+  } as unknown as core.Web3RequestManager<StarknetRpcApi>;
 
   beforeEach(() => {
     requestManagerSend.mockClear();
