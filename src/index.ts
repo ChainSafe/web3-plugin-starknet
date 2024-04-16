@@ -5,10 +5,6 @@ import * as _methods from "./methods";
 export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   public pluginNamespace = "starknet";
 
-  public test(param: string): void {
-    console.log(param);
-  }
-
   public call(): Object {
     return _methods.call(this.requestManager);
   }
