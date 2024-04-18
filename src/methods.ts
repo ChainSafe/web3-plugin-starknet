@@ -1,5 +1,5 @@
 import { core } from "web3";
-import { StarknetRPCMethods } from "./enums";
+import { StarknetRPCMethods } from "./StarknetRPC";
 import {
   BlockNumberOrTag,
   CallRequest,

@@ -1,4 +1,4 @@
-import { StarknetRPCMethods } from "./enums";
+import { StarknetRPCMethods } from "./StarknetRPC";
 
 export type StarknetRpcApi = {
   [StarknetRPCMethods.call]: (
