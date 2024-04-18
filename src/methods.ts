@@ -1,22 +1,33 @@
 import { core } from "web3";
 import { StarknetRPCMethods } from "./enums";
-import { StarknetRpcApi } from "./types";
+import {
+  BlockNumberOrTag,
+  CallRequest,
+  EstimateFeeRequest,
+  EstimateFeeResponse,
+  HexString,
+  StarknetRpcApi,
+} from "./types";
 
-export function call(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function call(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transaction: CallRequest,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString[]> {
   return requestManager.send({
     method: StarknetRPCMethods.call,
-    params: [],
+    params: [transaction, blockNumber],
   });
 }
 
-export function estimateFee(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function estimateFee(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  request: EstimateFeeRequest,
+  blockNumber: BlockNumberOrTag
+): Promise<EstimateFeeResponse[]> {
   return requestManager.send({
     method: StarknetRPCMethods.estimateFee,
-    params: [],
+    params: [request, blockNumber],
   });
 }
 
@@ -65,12 +76,14 @@ export function getClassHashAt(
   });
 }
 
-export function getNonce(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getNonce(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag,
+  address: HexString
+): Promise<HexString> {
   return requestManager.send({
     method: StarknetRPCMethods.getNonce,
-    params: [],
+    params: [blockNumber, address],
   });
 }
 

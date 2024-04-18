@@ -1,16 +1,29 @@
 import { Web3PluginBase } from "web3";
-import { StarknetRpcApi } from "./types";
+import {
+  BlockNumberOrTag,
+  CallRequest,
+  EstimateFeeRequest,
+  EstimateFeeResponse,
+  HexString,
+  StarknetRpcApi,
+} from "./types";
 import * as _methods from "./methods";
 
 export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   public pluginNamespace = "starknet";
 
-  public call(): Object {
-    return _methods.call(this.requestManager);
+  public async call(
+    transaction: CallRequest,
+    blockNumber: BlockNumberOrTag
+  ): Promise<HexString[]> {
+    return _methods.call(this.requestManager, transaction, blockNumber);
   }
 
-  public estimateFee(): Object {
-    return _methods.estimateFee(this.requestManager);
+  public async estimateFee(
+    request: EstimateFeeRequest,
+    blockNumber: BlockNumberOrTag
+  ): Promise<EstimateFeeResponse[]> {
+    return _methods.estimateFee(this.requestManager, request, blockNumber);
   }
 
   public estimateMessageFee(): Object {
@@ -33,8 +46,11 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
     return _methods.getClassHashAt(this.requestManager);
   }
 
-  public getNonce(): Object {
-    return _methods.getNonce(this.requestManager);
+  public async getNonce(
+    address: HexString,
+    blockNumber: BlockNumberOrTag
+  ): Promise<HexString> {
+    return _methods.getNonce(this.requestManager, blockNumber, address);
   }
 
   public getStorageAt(): Object {
