@@ -1,12 +1,11 @@
 import { core } from "web3";
-import { StarknetRPCMethods } from "./StarknetRPC";
+import { StarknetRpcApi, StarknetRPCMethods } from "./StarknetRPC";
 import {
   BlockNumberOrTag,
   CallRequest,
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
-  StarknetRpcApi,
 } from "./types";
 
 export async function call(

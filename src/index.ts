@@ -5,9 +5,9 @@ import {
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
-  StarknetRpcApi,
 } from "./types";
 import * as _methods from "./methods";
+import { StarknetRpcApi } from "./StarknetRPC";
 
 export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   public pluginNamespace = "starknet";
