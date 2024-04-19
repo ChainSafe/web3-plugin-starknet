@@ -1,10 +1,15 @@
 import { Web3PluginBase } from "web3";
 import {
   BlockNumberOrTag,
+  BlockTransactionsTraces,
   CallRequest,
+  ContractClass,
+  ContractClassDeprecated,
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
+  MSG_FROM_L1,
+  TransactionWithHash,
 } from "./types";
 import * as _methods from "./methods";
 import { StarknetRpcApi } from "./StarknetRPC";
@@ -20,49 +25,88 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   }
 
   public async estimateFee(
-    request: EstimateFeeRequest,
-    blockNumber: BlockNumberOrTag
+    request: EstimateFeeRequest["request"],
+    blockNumber: BlockNumberOrTag,
+    simulationFlags?: EstimateFeeRequest["simulation_flags"]
   ): Promise<EstimateFeeResponse[]> {
-    return _methods.estimateFee(this.requestManager, request, blockNumber);
+    return _methods.estimateFee(
+      this.requestManager,
+      request,
+      blockNumber,
+      simulationFlags
+    );
   }
 
-  public estimateMessageFee(): Object {
-    return _methods.estimateMessageFee(this.requestManager);
+  public async estimateMessageFee(
+    message: MSG_FROM_L1,
+    blockNumber: BlockNumberOrTag
+  ): Promise<EstimateFeeResponse> {
+    return _methods.estimateMessageFee(
+      this.requestManager,
+      message,
+      blockNumber
+    );
   }
 
   public simulateTransactions(): Object {
     return _methods.simulateTransactions(this.requestManager);
   }
 
-  public traceBlockTransactions(): Object {
-    return _methods.traceBlockTransactions(this.requestManager);
+  public async traceBlockTransactions(
+    blockNumber: BlockNumberOrTag
+  ): Promise<BlockTransactionsTraces> {
+    return _methods.traceBlockTransactions(this.requestManager, blockNumber);
   }
 
-  public getClassAt(): Object {
-    return _methods.getClassAt(this.requestManager);
+  public async getClassAt(
+    address: HexString,
+    blockNumber: BlockNumberOrTag
+  ): Promise<ContractClass | ContractClassDeprecated> {
+    return _methods.getClassAt(this.requestManager, address, blockNumber);
   }
 
-  public getClassHashAt(): Object {
-    return _methods.getClassHashAt(this.requestManager);
+  public async getClassHashAt(
+    address: HexString,
+    blockNumber: BlockNumberOrTag
+  ): Promise<HexString> {
+    return _methods.getClassHashAt(this.requestManager, address, blockNumber);
   }
 
   public async getNonce(
     address: HexString,
     blockNumber: BlockNumberOrTag
   ): Promise<HexString> {
-    return _methods.getNonce(this.requestManager, blockNumber, address);
+    return _methods.getNonce(this.requestManager, address, blockNumber);
   }
 
-  public getStorageAt(): Object {
-    return _methods.getStorageAt(this.requestManager);
+  public async getStorageAt(
+    address: HexString,
+    key: string,
+    blockNumber: BlockNumberOrTag
+  ): Promise<HexString> {
+    return _methods.getStorageAt(
+      this.requestManager,
+      address,
+      key,
+      blockNumber
+    );
   }
 
-  public getTransactionByBlockIdAndIndex(): Object {
-    return _methods.getTransactionByBlockIdAndIndex(this.requestManager);
+  public async getTransactionByBlockIdAndIndex(
+    index: number,
+    blockNumber: BlockNumberOrTag
+  ): Promise<TransactionWithHash> {
+    return _methods.getTransactionByBlockIdAndIndex(
+      this.requestManager,
+      index,
+      blockNumber
+    );
   }
 
-  public getTransactionByHash(): Object {
-    return _methods.getTransactionByHash(this.requestManager);
+  public async getTransactionByHash(
+    transactionHash: HexString
+  ): Promise<TransactionWithHash> {
+    return _methods.getTransactionByHash(this.requestManager, transactionHash);
   }
 }
 
