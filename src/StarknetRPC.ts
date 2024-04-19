@@ -1,5 +1,6 @@
 import {
   BlockNumberOrTag,
+  BlockTransactionsTraces,
   CallRequest,
   ContractClass,
   ContractClassDeprecated,
@@ -49,7 +50,9 @@ export type StarknetRpcApi = {
   ) => SimulateTransactionResponse[];
 
   // TODO - validate if this is missing "starknet_traceTransaction"
-  [StarknetRPCMethods.traceBlockTransactions]: () => Object;
+  [StarknetRPCMethods.traceBlockTransactions]: (
+    blockNumber: BlockNumberOrTag
+  ) => BlockTransactionsTraces;
 
   [StarknetRPCMethods.getClassAt]: (
     address: HexString,

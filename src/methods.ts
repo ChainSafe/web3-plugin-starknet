@@ -2,10 +2,15 @@ import { core } from "web3";
 import { StarknetRpcApi, StarknetRPCMethods } from "./StarknetRPC";
 import {
   BlockNumberOrTag,
+  BlockTransactionsTraces,
   CallRequest,
+  ContractClass,
+  ContractClassDeprecated,
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
+  MSG_FROM_L1,
+  TransactionWithHash,
 } from "./types";
 
 export async function call(
@@ -15,27 +20,40 @@ export async function call(
 ): Promise<HexString[]> {
   return requestManager.send({
     method: StarknetRPCMethods.call,
-    params: [transaction, blockNumber],
+    params: {
+      request: transaction,
+      block_id: blockNumber,
+    },
   });
 }
 
 export async function estimateFee(
   requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  request: EstimateFeeRequest,
-  blockNumber: BlockNumberOrTag
+  request: EstimateFeeRequest["request"],
+  blockNumber: BlockNumberOrTag,
+  simulationFlags?: EstimateFeeRequest["simulation_flags"]
 ): Promise<EstimateFeeResponse[]> {
   return requestManager.send({
     method: StarknetRPCMethods.estimateFee,
-    params: [request, blockNumber],
+    params: {
+      request,
+      simulation_flags: simulationFlags,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function estimateMessageFee(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function estimateMessageFee(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  message: MSG_FROM_L1,
+  blockNumber: BlockNumberOrTag
+): Promise<EstimateFeeResponse> {
   return requestManager.send({
     method: StarknetRPCMethods.estimateMessageFee,
-    params: [],
+    params: {
+      message,
+      block_id: blockNumber,
+    },
   });
 }
 
@@ -48,67 +66,98 @@ export function simulateTransactions(
   });
 }
 
-export function traceBlockTransactions(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function traceBlockTransactions(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag
+): Promise<BlockTransactionsTraces> {
   return requestManager.send({
     method: StarknetRPCMethods.traceBlockTransactions,
-    params: [],
+    params: {
+      block_id: blockNumber,
+    },
   });
 }
 
-export function getClassAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getClassAt(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  address: HexString,
+  blockNumber: BlockNumberOrTag
+): Promise<ContractClass | ContractClassDeprecated> {
   return requestManager.send({
     method: StarknetRPCMethods.getClassAt,
-    params: [],
+    params: {
+      contract_address: blockNumber,
+      block_id: address,
+    },
   });
 }
 
-export function getClassHashAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getClassHashAt(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  address: HexString,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString> {
   return requestManager.send({
     method: StarknetRPCMethods.getClassHashAt,
-    params: [],
+    params: {
+      contract_address: address,
+      block_id: blockNumber,
+    },
   });
 }
 
 export async function getNonce(
   requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  blockNumber: BlockNumberOrTag,
-  address: HexString
+  address: HexString,
+  blockNumber: BlockNumberOrTag
 ): Promise<HexString> {
   return requestManager.send({
     method: StarknetRPCMethods.getNonce,
-    params: [blockNumber, address],
+    params: {
+      contract_address: address,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function getTransactionByHash(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getTransactionByHash(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transactionHash: HexString
+): Promise<TransactionWithHash> {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByHash,
-    params: [],
+    params: {
+      transaction_hash: transactionHash,
+    },
   });
 }
 
-export function getTransactionByBlockIdAndIndex(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getTransactionByBlockIdAndIndex(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  index: number,
+  blockNumber: BlockNumberOrTag
+): Promise<TransactionWithHash> {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByBlockIdAndIndex,
-    params: [],
+    params: {
+      index,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function getStorageAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getStorageAt(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  address: HexString,
+  key: string,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString> {
   return requestManager.send({
     method: StarknetRPCMethods.getStorageAt,
-    params: [],
+    params: {
+      contract_address: address,
+      key: key,
+      block_id: blockNumber,
+    },
   });
 }

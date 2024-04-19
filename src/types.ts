@@ -10,7 +10,12 @@ export enum BlockTags {
 }
 export type BlockTag = `${BlockTags}`;
 
-export type BlockNumberOrTag = Numbers | BlockTag;
+export type BlockNumberOrTag =
+  | {
+      block_hash?: HexString;
+      block_number?: number;
+    }
+  | BlockTag;
 
 export type SIMULATION_FLAG_FOR_ESTIMATE_FEE = "SKIP_VALIDATE";
 
@@ -157,3 +162,15 @@ export type TXN =
   | DECLARE_TXN
   | DEPLOY_TXN
   | DEPLOY_ACCOUNT_TXN;
+
+export type MSG_FROM_L1 = {
+  from_address: HexString;
+  to_address: HexString;
+  entry_point_selector: HexString;
+  payload: HexString[];
+};
+
+export type BlockTransactionsTraces = {
+  transaction_hash: HexString;
+  trace_root: TRANSACTION_TRACE;
+}[];
