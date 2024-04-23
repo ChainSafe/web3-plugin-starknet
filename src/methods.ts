@@ -57,55 +57,6 @@ export async function estimateMessageFee(
   });
 }
 
-export function simulateTransactions(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
-  return requestManager.send({
-    method: StarknetRPCMethods.simulateTransactions,
-    params: [],
-  });
-}
-
-export async function traceBlockTransactions(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  blockNumber: BlockNumberOrTag
-): Promise<BlockTransactionsTraces> {
-  return requestManager.send({
-    method: StarknetRPCMethods.traceBlockTransactions,
-    params: {
-      block_id: blockNumber,
-    },
-  });
-}
-
-export async function getClassAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  address: HexString,
-  blockNumber: BlockNumberOrTag
-): Promise<ContractClass | ContractClassDeprecated> {
-  return requestManager.send({
-    method: StarknetRPCMethods.getClassAt,
-    params: {
-      contract_address: blockNumber,
-      block_id: address,
-    },
-  });
-}
-
-export async function getClassHashAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  address: HexString,
-  blockNumber: BlockNumberOrTag
-): Promise<HexString> {
-  return requestManager.send({
-    method: StarknetRPCMethods.getClassHashAt,
-    params: {
-      contract_address: address,
-      block_id: blockNumber,
-    },
-  });
-}
-
 export async function getNonce(
   requestManager: core.Web3RequestManager<StarknetRpcApi>,
   address: HexString,
@@ -141,22 +92,6 @@ export async function getTransactionByBlockIdAndIndex(
     method: StarknetRPCMethods.getTransactionByBlockIdAndIndex,
     params: {
       index,
-      block_id: blockNumber,
-    },
-  });
-}
-
-export async function getStorageAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  address: HexString,
-  key: string,
-  blockNumber: BlockNumberOrTag
-): Promise<HexString> {
-  return requestManager.send({
-    method: StarknetRPCMethods.getStorageAt,
-    params: {
-      contract_address: address,
-      key: key,
       block_id: blockNumber,
     },
   });

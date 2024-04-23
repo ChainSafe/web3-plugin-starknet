@@ -14,17 +14,15 @@ import {
 } from "./types";
 
 export enum StarknetRPCMethods {
-  call = "starknet_call",
-  estimateFee = "starknet_estimateFee",
-  estimateMessageFee = "starknet_estimateMessageFee",
-  simulateTransactions = "starknet_simulateTransactions",
-  traceBlockTransactions = "starknet_traceBlockTransactions",
-  getClassAt = "starknet_getClassAt",
-  getClassHashAt = "starknet_getClassHashAt",
-  getNonce = "starknet_getNonce",
-  getStorageAt = "starknet_getStorageAt",
-  getTransactionByBlockIdAndIndex = "starknet_getTransactionByBlockIdAndIndex",
-  getTransactionByHash = "starknet_getTransactionByHash",
+  call = "starknet_call", //
+  estimateFee = "starknet_estimateFee", //
+  estimateMessageFee = "starknet_estimateMessageFee", //
+  getNonce = "starknet_getNonce", //
+  getTransactionByBlockIdAndIndex = "starknet_getTransactionByBlockIdAndIndex", //
+  getTransactionByHash = "starknet_getTransactionByHash", //
+  // getTransactionReceipt
+  // getBlockTransactionCount
+  // pendingTransactions
 }
 
 export type StarknetRpcApi = {
@@ -43,36 +41,9 @@ export type StarknetRpcApi = {
     blockNumber: BlockNumberOrTag
   ) => EstimateFeeResponse;
 
-  // TODO - Refactor and fix, this is complicated for first run!
-  [StarknetRPCMethods.simulateTransactions]: (
-    transaction: SimulateTransactionRequest[],
-    blockNumber: BlockNumberOrTag
-  ) => SimulateTransactionResponse[];
-
-  // TODO - validate if this is missing "starknet_traceTransaction"
-  [StarknetRPCMethods.traceBlockTransactions]: (
-    blockNumber: BlockNumberOrTag
-  ) => BlockTransactionsTraces;
-
-  [StarknetRPCMethods.getClassAt]: (
-    address: HexString,
-    blockNumber: BlockNumberOrTag
-  ) => ContractClass | ContractClassDeprecated;
-
-  [StarknetRPCMethods.getClassHashAt]: (
-    address: HexString,
-    blockNumber: BlockNumberOrTag
-  ) => HexString;
-
   [StarknetRPCMethods.getNonce]: (
     blockNumber: BlockNumberOrTag,
     address: HexString
-  ) => HexString;
-
-  [StarknetRPCMethods.getStorageAt]: (
-    address: HexString,
-    key: string,
-    blockNumber: BlockNumberOrTag
   ) => HexString;
 
   [StarknetRPCMethods.getTransactionByBlockIdAndIndex]: (
