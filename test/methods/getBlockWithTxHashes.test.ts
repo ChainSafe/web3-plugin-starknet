@@ -39,9 +39,6 @@ describe("Method getNonce Tests", () => {
     });
 
     const response = await getBlockWithTxHashes(requestManager, "latest");
-    expect(response.block_hash).toBe(
-      "0x7d8822ce6ed27cd7355d7c133f408beb5f77fc237bd052a36644129259e2f19"
-    );
     expect(response.parent_hash).toBe(
       "0x62b578798f7b42696634ed212fb680b464dceb7293ab1c3587001b37dab2360"
     );

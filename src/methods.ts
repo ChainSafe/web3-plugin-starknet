@@ -121,7 +121,7 @@ export async function getBlockTransactionCount(
 export async function getBlockWithTxHashes(
   requestManager: core.Web3RequestManager<StarknetRpcApi>,
   blockNumber: BlockNumberOrTag
-): Promise<BlockWithTxHashes[]> {
+): Promise<BlockWithTxHashes> {
   return requestManager.send({
     method: StarknetRPCMethods.getBlockWithTxHashes,
     params: { block_id: blockNumber },

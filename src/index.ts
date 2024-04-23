@@ -83,7 +83,7 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   }
 
   public async getPendingTransactions(): Promise<TransactionWithHash[]> {
-    const transactions = await _methods.getBlockWithTxHashes(
+    const { transactions } = await _methods.getBlockWithTxHashes(
       this.requestManager,
       "pending"
     );

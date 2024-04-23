@@ -22,6 +22,11 @@ export enum StarknetRPCMethods {
   getBlockWithTxHashes = "starknet_getBlockWithTxHashes",
 }
 
+export enum BlockTags {
+  LATEST = "latest",
+  PENDING = "pending",
+}
+
 export type StarknetRpcApi = {
   [StarknetRPCMethods.call]: (
     transaction: CallRequest,
