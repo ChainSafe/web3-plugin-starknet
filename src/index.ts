@@ -1,14 +1,12 @@
 import { Web3PluginBase } from "web3";
 import {
   BlockNumberOrTag,
-  BlockTransactionsTraces,
   CallRequest,
-  ContractClass,
-  ContractClassDeprecated,
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
   MSG_FROM_L1,
+  TransactionReceipt,
   TransactionWithHash,
 } from "./types";
 import * as _methods from "./methods";
@@ -48,48 +46,11 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
     );
   }
 
-  public simulateTransactions(): Object {
-    return _methods.simulateTransactions(this.requestManager);
-  }
-
-  public async traceBlockTransactions(
-    blockNumber: BlockNumberOrTag
-  ): Promise<BlockTransactionsTraces> {
-    return _methods.traceBlockTransactions(this.requestManager, blockNumber);
-  }
-
-  public async getClassAt(
-    address: HexString,
-    blockNumber: BlockNumberOrTag
-  ): Promise<ContractClass | ContractClassDeprecated> {
-    return _methods.getClassAt(this.requestManager, address, blockNumber);
-  }
-
-  public async getClassHashAt(
-    address: HexString,
-    blockNumber: BlockNumberOrTag
-  ): Promise<HexString> {
-    return _methods.getClassHashAt(this.requestManager, address, blockNumber);
-  }
-
   public async getNonce(
     address: HexString,
     blockNumber: BlockNumberOrTag
   ): Promise<HexString> {
     return _methods.getNonce(this.requestManager, address, blockNumber);
-  }
-
-  public async getStorageAt(
-    address: HexString,
-    key: string,
-    blockNumber: BlockNumberOrTag
-  ): Promise<HexString> {
-    return _methods.getStorageAt(
-      this.requestManager,
-      address,
-      key,
-      blockNumber
-    );
   }
 
   public async getTransactionByBlockIdAndIndex(
@@ -107,6 +68,26 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
     transactionHash: HexString
   ): Promise<TransactionWithHash> {
     return _methods.getTransactionByHash(this.requestManager, transactionHash);
+  }
+
+  public async getTransactionReceipt(
+    transactionHash: HexString
+  ): Promise<TransactionReceipt> {
+    return _methods.getTransactionReceipt(this.requestManager, transactionHash);
+  }
+
+  public async getBlockTransactionCount(
+    blockNumber: BlockNumberOrTag
+  ): Promise<number> {
+    return _methods.getBlockTransactionCount(this.requestManager, blockNumber);
+  }
+
+  public async getPendingTransactions(): Promise<TransactionWithHash[]> {
+    const transactions = await _methods.getBlockWithTxHashes(
+      this.requestManager,
+      "pending"
+    );
+    return Promise.all(transactions.map((it) => this.getTransactionByHash(it)));
   }
 }
 

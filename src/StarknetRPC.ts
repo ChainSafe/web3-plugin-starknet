@@ -1,28 +1,25 @@
 import {
   BlockNumberOrTag,
-  BlockTransactionsTraces,
+  BlockWithTxHashes,
   CallRequest,
-  ContractClass,
-  ContractClassDeprecated,
   EstimateFeeRequest,
   EstimateFeeResponse,
   EstimateMessageFeeRequest,
   HexString,
-  SimulateTransactionRequest,
-  SimulateTransactionResponse,
+  TransactionReceipt,
   TransactionWithHash,
 } from "./types";
 
 export enum StarknetRPCMethods {
-  call = "starknet_call", //
-  estimateFee = "starknet_estimateFee", //
-  estimateMessageFee = "starknet_estimateMessageFee", //
-  getNonce = "starknet_getNonce", //
-  getTransactionByBlockIdAndIndex = "starknet_getTransactionByBlockIdAndIndex", //
-  getTransactionByHash = "starknet_getTransactionByHash", //
-  // getTransactionReceipt
-  // getBlockTransactionCount
-  // pendingTransactions
+  call = "starknet_call",
+  estimateFee = "starknet_estimateFee",
+  estimateMessageFee = "starknet_estimateMessageFee",
+  getNonce = "starknet_getNonce",
+  getTransactionByBlockIdAndIndex = "starknet_getTransactionByBlockIdAndIndex",
+  getTransactionByHash = "starknet_getTransactionByHash",
+  getTransactionReceipt = "starknet_getTransactionReceipt",
+  getBlockTransactionCount = "starknet_getBlockTransactionCount",
+  getBlockWithTxHashes = "starknet_getBlockWithTxHashes",
 }
 
 export type StarknetRpcApi = {
@@ -54,4 +51,20 @@ export type StarknetRpcApi = {
   [StarknetRPCMethods.getTransactionByHash]: (
     transaction_hash: HexString
   ) => TransactionWithHash;
+
+  [StarknetRPCMethods.getTransactionReceipt]: (
+    transaction_hash: HexString
+  ) => TransactionReceipt;
+
+  [StarknetRPCMethods.getBlockTransactionCount]: (
+    blockNumber: BlockNumberOrTag
+  ) => number;
+
+  [StarknetRPCMethods.getBlockWithTxHashes]: (
+    blockNumber: BlockNumberOrTag
+  ) => BlockWithTxHashes[];
+
+  [StarknetRPCMethods.getBlockWithTxHashes]: (
+    blockNumber: BlockNumberOrTag
+  ) => BlockWithTxHashes[];
 };

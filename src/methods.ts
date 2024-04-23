@@ -2,14 +2,13 @@ import { core } from "web3";
 import { StarknetRpcApi, StarknetRPCMethods } from "./StarknetRPC";
 import {
   BlockNumberOrTag,
-  BlockTransactionsTraces,
+  BlockWithTxHashes,
   CallRequest,
-  ContractClass,
-  ContractClassDeprecated,
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
   MSG_FROM_L1,
+  TransactionReceipt,
   TransactionWithHash,
 } from "./types";
 
@@ -94,5 +93,37 @@ export async function getTransactionByBlockIdAndIndex(
       index,
       block_id: blockNumber,
     },
+  });
+}
+
+export async function getTransactionReceipt(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transactionHash: HexString
+): Promise<TransactionReceipt> {
+  return requestManager.send({
+    method: StarknetRPCMethods.getTransactionReceipt,
+    params: {
+      transaction_hash: transactionHash,
+    },
+  });
+}
+
+export async function getBlockTransactionCount(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag
+): Promise<number> {
+  return requestManager.send({
+    method: StarknetRPCMethods.getBlockTransactionCount,
+    params: { block_id: blockNumber },
+  });
+}
+
+export async function getBlockWithTxHashes(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag
+): Promise<BlockWithTxHashes[]> {
+  return requestManager.send({
+    method: StarknetRPCMethods.getBlockWithTxHashes,
+    params: { block_id: blockNumber },
   });
 }

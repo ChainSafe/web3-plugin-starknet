@@ -19,7 +19,134 @@ export type BlockNumberOrTag =
 
 export type SIMULATION_FLAG_FOR_ESTIMATE_FEE = "SKIP_VALIDATE";
 
-export type BROADCASTED_TXN = "";
+export type BROADCASTED_TXN =
+  | BROADCASTED_INVOKE_TXN
+  | BROADCASTED_DECLARE_TXN
+  | BROADCASTED_DEPLOY_ACCOUNT_TXN;
+
+export type BROADCASTED_INVOKE_TXN = INVOKE_TXN;
+
+export type BROADCASTED_DEPLOY_ACCOUNT_TXN = DEPLOY_ACCOUNT_TXN;
+
+export type BROADCASTED_DECLARE_TXN =
+  | BROADCASTED_DECLARE_TXN_V1
+  | BROADCASTED_DECLARE_TXN_V2
+  | BROADCASTED_DECLARE_TXN_V3;
+
+export type BROADCASTED_DECLARE_TXN_V1 = {
+  type: "DECLARE";
+  sender_address: HexString;
+  max_fee: HexString;
+  version: "0x1" | "0x100000000000000000000000000000001";
+  signature: HexString[];
+  nonce: HexString;
+  contract_class: ContractClassDeprecated;
+};
+
+export type BROADCASTED_DECLARE_TXN_V2 = {
+  type: "DECLARE";
+  sender_address: HexString;
+  compiled_class_hash: HexString;
+  max_fee: HexString;
+  version: "0x2" | "0x100000000000000000000000000000002";
+  signature: HexString[];
+  nonce: HexString;
+  contract_class: ContractClass;
+};
+
+export type BROADCASTED_DECLARE_TXN_V3 = {
+  type: "DECLARE";
+  sender_address: HexString;
+  compiled_class_hash: HexString;
+  version: "0x3" | "0x100000000000000000000000000000003";
+  signature: HexString[];
+  nonce: HexString;
+  contract_class: ContractClass;
+  // new...
+  resource_bounds: RESOURCE_BOUNDS_MAPPING;
+  tip: string;
+  paymaster_data: HexString[];
+  account_deployment_data: HexString[];
+  nonce_data_availability_mode: DA_MODE;
+  fee_data_availability_mode: DA_MODE;
+};
+
+export type DEPLOY_ACCOUNT_TXN = DEPLOY_ACCOUNT_TXN_V1 | DEPLOY_ACCOUNT_TXN_V3;
+
+export type DEPLOY_ACCOUNT_TXN_V1 = {
+  type: "DEPLOY_ACCOUNT";
+  max_fee: HexString;
+  version: "0x1" | "0x100000000000000000000000000000001";
+  signature: HexString[];
+  nonce: HexString;
+  contract_address_salt: HexString;
+  constructor_calldata: HexString[];
+  class_hash: HexString;
+};
+
+export type DEPLOY_ACCOUNT_TXN_V3 = {
+  type: "DEPLOY_ACCOUNT";
+  version: "0x3" | "0x100000000000000000000000000000003";
+  signature: HexString[];
+  nonce: HexString;
+  contract_address_salt: HexString;
+  constructor_calldata: HexString[];
+  class_hash: HexString;
+  resource_bounds: RESOURCE_BOUNDS_MAPPING;
+  tip: string;
+  paymaster_data: HexString[];
+  nonce_data_availability_mode: DA_MODE;
+  fee_data_availability_mode: DA_MODE;
+};
+
+export type INVOKE_TXN = INVOKE_TXN_V0 | INVOKE_TXN_V1 | INVOKE_TXN_V3;
+
+export type INVOKE_TXN_V0 = {
+  type: "INVOKE";
+  max_fee: HexString;
+  version: "0x0" | "0x100000000000000000000000000000000";
+  signature: HexString[];
+  contract_address: HexString;
+  entry_point_selector: HexString;
+  calldata: HexString[];
+};
+
+export type INVOKE_TXN_V1 = {
+  type: "INVOKE";
+  sender_address: HexString;
+  calldata: HexString[];
+  max_fee: HexString;
+  version: "0x1" | "0x100000000000000000000000000000001";
+  signature: HexString[];
+  nonce: HexString;
+};
+
+export type INVOKE_TXN_V3 = {
+  type: "INVOKE";
+  sender_address: HexString;
+  calldata: HexString[];
+  version: "0x3" | "0x100000000000000000000000000000003";
+  signature: HexString[];
+  nonce: HexString;
+  resource_bounds: RESOURCE_BOUNDS_MAPPING;
+  tip: string;
+  paymaster_data: HexString[];
+  account_deployment_data: HexString[];
+  nonce_data_availability_mode: DA_MODE;
+  fee_data_availability_mode: DA_MODE;
+};
+
+export type DA_MODE = "L1" | "L2";
+
+export type RESOURCE_BOUNDS_MAPPING = {
+  l1_gas: RESOURCE_BOUNDS;
+  l2_gas: RESOURCE_BOUNDS;
+};
+
+export type RESOURCE_BOUNDS = {
+  max_amount: string;
+  max_price_per_unit: string;
+};
 
 /* Call */
 export interface CallRequest {
@@ -48,25 +175,6 @@ export interface EstimateFeeResponse {
   overall_fee: HexString;
   unit: "WEI" | "FRI";
 }
-
-/* Simulate */
-// TODO - BIG FAT REFACTOR!
-export interface SimulateTransactionRequest {
-  transactions: BROADCASTED_TXN;
-  simulation_flags: SIMULATION_FLAG;
-}
-
-export interface SimulateTransactionResponse {
-  transaction_trace: TRANSACTION_TRACE;
-  fee_estimation: EstimateFeeResponse;
-}
-
-export type TRANSACTION_TRACE = {
-  invoke_tx_trace?: INVOKE_TXN_TRACE;
-  declare_tx_trace?: DECLARE_TXN_TRACE;
-  deploy_account_tx_trace?: DEPLOY_ACCOUNT_TXN_TRACE;
-  l1_handler_tx_trace?: L1_HANDLER_TXN_TRACE;
-};
 
 // Represents a transaction trace for an invoke transaction.
 export type INVOKE_TXN_TRACE = {
@@ -105,7 +213,7 @@ type FUNCTION_INVOCATION = "";
 
 export type STATE_DIFF = {
   storage_diffs: CONTRACT_STORAGE_DIFF_ITEM[];
-  deprecated_declared_classes: FELT[];
+  deprecated_declared_classes: HexString[];
   declared_classes: NEW_CLASSES[];
   deployed_contracts: DEPLOYED_CONTRACT_ITEM[];
   replaced_classes: REPLACED_CLASS[];
@@ -113,15 +221,6 @@ export type STATE_DIFF = {
 };
 
 export type SIMULATION_FLAG = "SKIP_VALIDATE" | "SKIP_FEE_CHARGE";
-/*
-starknet_simulateTransactions: {
-  params: {
-    block_id: BLOCK_ID;
-    transactions: Array<BROADCASTED_TXN>;
-    simulation_flags: Array<SIMULATION_FLAG>;
-  };
-  result: SimulateTransactionResponse;
-*/
 
 /* Class at */
 export interface ContractClass {
@@ -170,7 +269,50 @@ export type MSG_FROM_L1 = {
   payload: HexString[];
 };
 
-export type BlockTransactionsTraces = {
-  transaction_hash: HexString;
-  trace_root: TRANSACTION_TRACE;
-}[];
+export type TransactionReceipt = TXN_RECEIPT & {
+  block_hash?: HexString;
+  block_number?: number;
+};
+
+export type COMMON_RECEIPT_PROPERTIES = {
+  transaction_hash: TXN_HASH;
+  actual_fee: FEE_PAYMENT;
+  execution_status: TXN_EXECUTION_STATUS;
+  finality_status: TXN_FINALITY_STATUS;
+  messages_sent: MSG_TO_L1[];
+  revert_reason?: string;
+  events: EVENT[];
+  execution_resources: EXECUTION_RESOURCES;
+};
+
+export type INVOKE_TXN_RECEIPT = {
+  type: "INVOKE";
+} & COMMON_RECEIPT_PROPERTIES;
+
+export type DECLARE_TXN_RECEIPT = {
+  type: "DECLARE";
+} & COMMON_RECEIPT_PROPERTIES;
+
+export type DEPLOY_ACCOUNT_TXN_RECEIPT = {
+  type: "DEPLOY_ACCOUNT";
+  contract_address: HexString;
+} & COMMON_RECEIPT_PROPERTIES;
+
+export type DEPLOY_TXN_RECEIPT = {
+  type: "DEPLOY";
+  contract_address: HexString;
+} & COMMON_RECEIPT_PROPERTIES;
+
+export type L1_HANDLER_TXN_RECEIPT = {
+  type: "L1_HANDLER";
+  message_hash: NUM_AS_HEX;
+} & COMMON_RECEIPT_PROPERTIES;
+
+export type TXN_RECEIPT =
+  | INVOKE_TXN_RECEIPT
+  | L1_HANDLER_TXN_RECEIPT
+  | DECLARE_TXN_RECEIPT
+  | DEPLOY_TXN_RECEIPT
+  | DEPLOY_ACCOUNT_TXN_RECEIPT;
+
+export type BlockWithTxHashes = BLOCK_WITH_TX_HASHES | PENDING_BLOCK_WITH_TX_HASHES;
