@@ -5,7 +5,7 @@ import {
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
-  MSG_FROM_L1,
+  MsgFromL1,
   TransactionReceipt,
   TransactionWithHash,
 } from "./types";
@@ -36,7 +36,7 @@ export class StarknetPlugin extends Web3PluginBase<StarknetRpcApi> {
   }
 
   public async estimateMessageFee(
-    message: MSG_FROM_L1,
+    message: MsgFromL1,
     blockNumber: BlockNumberOrTag
   ): Promise<EstimateFeeResponse> {
     return _methods.estimateMessageFee(

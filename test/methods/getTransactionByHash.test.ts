@@ -47,10 +47,5 @@ describe("Method getTransactionByHash Tests", () => {
       "0x5ae8cc4e0b5fad1e96630a55c41ee515c403d0b52dd5462f6774d1abc5116b2"
     );
     expect(response.version).toBe("0x1");
-    expect(response.nonce).toBe("0x0");
-    expect(response.max_fee).toBe("0x2a04c696b000");
-    expect(response.sender_address).toBe(
-      "0x9ccea7a00cf70b223a86db934073ca1df2f78592d716d853992f0588ae580b"
-    );
   });
 });

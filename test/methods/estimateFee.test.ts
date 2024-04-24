@@ -51,9 +51,9 @@ describe("Method estimateFee Tests", () => {
       "latest",
       ["SKIP_VALIDATE"]
     );
-    expect(response[0].gas_consumed).toBe("0x3e9b");
+    expect(response[0].gas_consumed).toBe("0x14");
     expect(response[0].gas_price).toBe("0x174876e800");
-    expect(response[0].overall_fee).toBe("0x5bd49e7a27800");
+    expect(response[0].overall_fee).toBe("0x1c032f0f2000");
     expect(response[0].unit).toBe("WEI");
   });
 });

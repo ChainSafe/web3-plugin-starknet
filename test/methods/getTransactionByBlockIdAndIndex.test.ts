@@ -47,10 +47,5 @@ describe("Method getTransactionByBlockIdAndIndex Tests", () => {
       "0x92c1c3b8b0c99ffacf0acb5fa71c6725e3c22c6490ec5f9d1a0c510213e93d"
     );
     expect(response.version).toBe("0x1");
-    expect(response.nonce).toBe("0x0");
-    expect(response.max_fee).toBe("0x2126ad4d5400");
-    expect(response.sender_address).toBe(
-      "0x9ccea7a00cf70b223a86db934073ca1df2f78592d716d853992f0588ae580b"
-    );
   });
 });

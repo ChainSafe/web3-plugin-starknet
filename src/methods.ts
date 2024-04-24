@@ -7,7 +7,7 @@ import {
   EstimateFeeRequest,
   EstimateFeeResponse,
   HexString,
-  MSG_FROM_L1,
+  MsgFromL1,
   TransactionReceipt,
   TransactionWithHash,
 } from "./types";
@@ -44,7 +44,7 @@ export async function estimateFee(
 
 export async function estimateMessageFee(
   requestManager: core.Web3RequestManager<StarknetRpcApi>,
-  message: MSG_FROM_L1,
+  message: MsgFromL1,
   blockNumber: BlockNumberOrTag
 ): Promise<EstimateFeeResponse> {
   return requestManager.send({
