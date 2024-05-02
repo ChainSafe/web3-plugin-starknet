@@ -1,102 +1,129 @@
 import { core } from "web3";
-import { StarknetRPCMethods } from "./enums";
-import { StarknetRpcApi } from "./types";
+import { StarknetRpcApi, StarknetRPCMethods } from "./StarknetRPC";
+import {
+  BlockNumberOrTag,
+  BlockWithTxHashes,
+  CallRequest,
+  EstimateFeeRequest,
+  EstimateFeeResponse,
+  HexString,
+  MsgFromL1,
+  TransactionReceipt,
+  TransactionWithHash,
+} from "./types";
 
-export function call(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function call(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transaction: CallRequest,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString[]> {
   return requestManager.send({
     method: StarknetRPCMethods.call,
-    params: [],
+    params: {
+      request: transaction,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function estimateFee(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function estimateFee(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  request: EstimateFeeRequest["request"],
+  blockNumber: BlockNumberOrTag,
+  simulationFlags?: EstimateFeeRequest["simulation_flags"]
+): Promise<EstimateFeeResponse[]> {
   return requestManager.send({
     method: StarknetRPCMethods.estimateFee,
-    params: [],
+    params: {
+      request,
+      simulation_flags: simulationFlags,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function estimateMessageFee(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function estimateMessageFee(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  message: MsgFromL1,
+  blockNumber: BlockNumberOrTag
+): Promise<EstimateFeeResponse> {
   return requestManager.send({
     method: StarknetRPCMethods.estimateMessageFee,
-    params: [],
+    params: {
+      message,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function simulateTransactions(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
-  return requestManager.send({
-    method: StarknetRPCMethods.simulateTransactions,
-    params: [],
-  });
-}
-
-export function traceBlockTransactions(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
-  return requestManager.send({
-    method: StarknetRPCMethods.traceBlockTransactions,
-    params: [],
-  });
-}
-
-export function getClassAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
-  return requestManager.send({
-    method: StarknetRPCMethods.getClassAt,
-    params: [],
-  });
-}
-
-export function getClassHashAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
-  return requestManager.send({
-    method: StarknetRPCMethods.getClassHashAt,
-    params: [],
-  });
-}
-
-export function getNonce(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getNonce(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  address: HexString,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString> {
   return requestManager.send({
     method: StarknetRPCMethods.getNonce,
-    params: [],
+    params: {
+      contract_address: address,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function getTransactionByHash(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getTransactionByHash(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transactionHash: HexString
+): Promise<TransactionWithHash> {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByHash,
-    params: [],
+    params: {
+      transaction_hash: transactionHash,
+    },
   });
 }
 
-export function getTransactionByBlockIdAndIndex(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getTransactionByBlockIdAndIndex(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  index: number,
+  blockNumber: BlockNumberOrTag
+): Promise<TransactionWithHash> {
   return requestManager.send({
     method: StarknetRPCMethods.getTransactionByBlockIdAndIndex,
-    params: [],
+    params: {
+      index,
+      block_id: blockNumber,
+    },
   });
 }
 
-export function getStorageAt(
-  requestManager: core.Web3RequestManager<StarknetRpcApi>
-): Object {
+export async function getTransactionReceipt(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  transactionHash: HexString
+): Promise<TransactionReceipt> {
   return requestManager.send({
-    method: StarknetRPCMethods.getStorageAt,
-    params: [],
+    method: StarknetRPCMethods.getTransactionReceipt,
+    params: {
+      transaction_hash: transactionHash,
+    },
+  });
+}
+
+export async function getBlockTransactionCount(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag
+): Promise<number> {
+  return requestManager.send({
+    method: StarknetRPCMethods.getBlockTransactionCount,
+    params: { block_id: blockNumber },
+  });
+}
+
+export async function getBlockWithTxHashes(
+  requestManager: core.Web3RequestManager<StarknetRpcApi>,
+  blockNumber: BlockNumberOrTag
+): Promise<BlockWithTxHashes> {
+  return requestManager.send({
+    method: StarknetRPCMethods.getBlockWithTxHashes,
+    params: { block_id: blockNumber },
   });
 }
