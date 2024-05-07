@@ -1,34 +1,100 @@
-web3-plugin-starknet
-===========
+# Web3.js Plugin for Starknet
 
-This is a template for creating a repository for web3.js plugin.
+[Web3.js plugin](https://docs.web3js.org/guides/web3_plugin_guide/) for
+[Starknet](https://www.starknet.io/) developers.
 
-How to use
-------------
+## RPC Methods
 
-1. Create your project out of this template.
+This plugin exposes the following RPC methods (type definitions can be found in
+[src/types.ts](src/types.ts)):
 
-    You can do so by pressing on `Use this template` on the above right corner and then select `Create new Repositor`. Please, use the convention `web3-plugin-<name>` for your repo name.
-2. Update the `name` and `description` fileds at your `package.json`.
+### `starknet_call`
 
-    Chose a name like: `@<organization>/web3-plugin-<name>` (or the less better `web3-plugin-<name>`).
-3. Update the code inside `src` folder.
+```ts
+public async call(
+  transaction: CallRequest,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString[]>
+```
 
-4. Modify and add tests inside `test` folder.
+### `starknet_estimateFee`
 
-5. Publish to the npm registry.
+```ts
+public async estimateFee(
+  request: EstimateFeeRequest["request"],
+  blockNumber: BlockNumberOrTag,
+  simulationFlags?: EstimateFeeRequest["simulation_flags"]
+): Promise<EstimateFeeResponse[]>
+```
 
-    You can publish with something like: `yarn build && npm publish --access public`.
+### `starknet_estimateMessageFee`
 
-Contributing
-------------
+```ts
+public async estimateMessageFee(
+  message: MsgFromL1,
+  blockNumber: BlockNumberOrTag
+): Promise<EstimateFeeResponse>
+```
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+### `starknet_getNonce`
+
+```ts
+public async getNonce(
+  address: HexString,
+  blockNumber: BlockNumberOrTag
+): Promise<HexString>
+```
+
+### `starknet_getTransactionByBlockIdAndIndex`
+
+```ts
+public async getTransactionByBlockIdAndIndex(
+  index: number,
+  blockNumber: BlockNumberOrTag
+): Promise<TransactionWithHash>
+```
+
+### `starknet_getTransactionByHash`
+
+```ts
+public async getTransactionByHash(
+  transactionHash: HexString
+): Promise<TransactionWithHash>
+```
+
+### `starknet_getTransactionReceipt`
+
+```ts
+public async getTransactionReceipt(
+  transactionHash: HexString
+): Promise<TransactionReceipt>
+```
+
+### `starknet_getBlockTransactionCount`
+
+```ts
+public async getBlockTransactionCount(
+  blockNumber: BlockNumberOrTag
+): Promise<number>
+```
+
+## Additional Methods
+
+### `getPendingTransactions`
+
+```ts
+public async getPendingTransactions(): Promise<TransactionWithHash[]>
+```
+
+## Contributing
+
+[Pull requests](https://github.com/ChainSafe/web3-plugin-starknet/pulls) are
+welcome. For major changes, please
+[open an issue](https://github.com/ChainSafe/web3-plugin-starknet/issues/new)
+first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
-License
--------
+## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
