@@ -1,6 +1,6 @@
 {
   "name": "@chainsafe/web3-plugin-starknet",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Starknet plugin to extend web3.js with additional methods",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
