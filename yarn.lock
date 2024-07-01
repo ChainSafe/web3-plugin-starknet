@@ -2569,6 +2569,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter3@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "eventemitter3@npm:5.0.1"
+  checksum: 4ba5c00c506e6c786b4d6262cfbce90ddc14c10d4667e5c83ae993c9de88aa856033994dd2b35b83e8dc1170e224e66a319fa80adc4c32adcd2379bbc75da814
+  languageName: node
+  linkType: hard
+
 "execa@npm:^5.0.0":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
@@ -5750,15 +5757,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"web3-types@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "web3-types@npm:1.5.0"
+  checksum: b71bf032f126dd2fcda8718d02302da6fc0ce65d0c6eb9d195b14a1c845c5fa2a56f7261217438f86901f5f3a325c0a8507d66c200ef73676aa31b7362acd9fd
+  languageName: node
+  linkType: hard
+
 "web3-utils@npm:^4.0.7":
-  version: 4.0.7
-  resolution: "web3-utils@npm:4.0.7"
+  version: 4.2.2
+  resolution: "web3-utils@npm:4.2.2"
   dependencies:
     ethereum-cryptography: ^2.0.0
-    web3-errors: ^1.1.3
-    web3-types: ^1.3.0
-    web3-validator: ^2.0.3
-  checksum: 0d1249089a0a3cb494b306d13e22944262aa2ba872f14784a5469935444268e083071fd80b95384adcb3484e1bc7c7500697c5dc03ef4815f3a5ce77d1dc08b9
+    eventemitter3: ^5.0.1
+    web3-errors: ^1.1.4
+    web3-types: ^1.5.0
+    web3-validator: ^2.0.5
+  checksum: 0f750715414926a2248f6da81d3a38de563814748ca2654e38d57aaf72c53ab4b375afeec571cd936808e1d30e414859f9444503bf7ffc09c3e63c65089b1f89
   languageName: node
   linkType: hard
 
@@ -5772,6 +5787,19 @@ __metadata:
     web3-types: ^1.3.0
     zod: ^3.21.4
   checksum: 12bab1b8e037eb9d06b1b64183f0ec0e02c8e57cd129d617da70a151d93c8e494235495735a37a9a6e2885f08abaf43f5986dc424ed666977ba19f0d94f97492
+  languageName: node
+  linkType: hard
+
+"web3-validator@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "web3-validator@npm:2.0.5"
+  dependencies:
+    ethereum-cryptography: ^2.0.0
+    util: ^0.12.5
+    web3-errors: ^1.1.4
+    web3-types: ^1.5.0
+    zod: ^3.21.4
+  checksum: 456f4d36e61416f402c4b71abb2ccfb4a8ad442f01ac36bd70d75a53f5d2f8bf59009373de438ec16ec32d544c50a03013e9fd2d1778c43eaab67cab94f1eb98
   languageName: node
   linkType: hard
 
