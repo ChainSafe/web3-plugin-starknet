@@ -1,5 +1,7 @@
 # Web3.js Plugin for Starknet
 
+#### Web3.js libraries are being sunset on March 4th, 2025. For migration guides and more details please refer to [Chainsafe blog](https://blog.chainsafe.io/web3-js-sunset/)
+
 [Web3.js plugin](https://docs.web3js.org/guides/web3_plugin_guide/) for
 [Starknet](https://www.starknet.io/) developers.
 
